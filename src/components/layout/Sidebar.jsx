@@ -14,22 +14,22 @@ import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import SettingsIcon from "@mui/icons-material/Settings";
+import { Toolbar } from "@mui/material";
 
-const Sidebar = ({ drawerWidth }) => {
-  return (
-    <Drawer
-      variant="permanent"
+const Sidebar = ({ drawerWidth, mobileOpen, onClose }) => {
+  const drawerContent = (
+    <Box
       sx={{
+        height: "100%",
         width: drawerWidth,
-        [`& .MuiDrawer-paper`]: {
-          width: drawerWidth,
-          bgcolor: "#1f2937",
-          color: "#fff",
-          boxSizing: "border-box",
-        },
+        backgroundColor: "#0f2a44",
+        color: "#ffffff",
       }}
     >
-      {/* User Info */}
+      <Toolbar />
+
+      {/* -user-info */}
+
       <Box
         sx={{
           p: 3,
@@ -47,8 +47,6 @@ const Sidebar = ({ drawerWidth }) => {
           </Typography>
         </Box>
       </Box>
-
-      {/* Menu */}
       <List sx={{ mt: 2 }}>
         {[
           { text: "Dashboard", icon: <DashboardIcon /> },
@@ -73,7 +71,48 @@ const Sidebar = ({ drawerWidth }) => {
           </ListItem>
         ))}
       </List>
-    </Drawer>
+    </Box>
+  );
+  return (
+    <>
+      {/* MOBILE */}
+      <Drawer
+        variant="temporary"
+        open={mobileOpen}
+        onClose={onClose}
+        ModalProps={{ keepMounted: true }}
+        sx={{
+          display: { xs: "block", md: "none" },
+          width: drawerWidth,
+          [`& .MuiDrawer-paper`]: {
+            width: drawerWidth,
+            bgcolor: "#1f2937",
+            color: "#fff",
+            boxSizing: "border-box",
+          },
+        }}
+      >
+        {drawerContent}
+      </Drawer>
+
+      {/* DESKTOP */}
+      <Drawer
+        variant="permanent"
+        sx={{
+          width: drawerWidth,
+          display: { xs: "none", md: "block" },
+          [`& .MuiDrawer-paper`]: {
+            width: drawerWidth,
+            bgcolor: "#1f2937",
+            color: "#fff",
+            boxSizing: "border-box",
+          },
+        }}
+        open
+      >
+        {drawerContent}
+      </Drawer>
+    </>
   );
 };
 

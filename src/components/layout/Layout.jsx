@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { Box } from "@mui/material";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
@@ -5,10 +6,19 @@ import Sidebar from "./Sidebar";
 const drawerWidth = 260;
 
 const Layout = ({ children }) => {
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
   return (
     <Box sx={{ display: "flex" }}>
-      <Header drawerWidth={drawerWidth} />
-      <Sidebar drawerWidth={drawerWidth} />
+      <Header onMenuClick={handleDrawerToggle} drawerWidth={drawerWidth} />
+      <Sidebar
+        mobileOpen={mobileOpen}
+        onClose={handleDrawerToggle}
+        drawerWidth={drawerWidth}
+      />
 
       <Box
         component="main"
